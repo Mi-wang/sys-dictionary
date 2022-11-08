@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    druid:
+      username: root
+      password: admin
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql:///sys_dict_demo?serverTimezone=UTC
+logging:
+  level:
+    cn.wolfcode.mapper: debug
+
+mybatis-plus:
+  mapper-locations: classpath:cn/wolfcode/mapper/*Mapper.xml
+
+  E:\workspace-idea\sys-dict-demo\src\main\resources\cn\wolfcdoe\mapper\CustomerMapper:
+    xml:

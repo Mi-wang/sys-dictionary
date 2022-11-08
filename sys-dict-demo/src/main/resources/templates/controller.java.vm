@@ -1,0 +1,70 @@
+package ${package.Controller};
+
+
+import cn.wolfcode.entity.${entity};
+import cn.wolfcode.service.I${entity}Service;
+import cn.wolfcode.qo.QueryObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+#if(${restControllerStyle})
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    private I${entity}Service service;
+
+    @GetMapping
+    public JsonResult<Page<${entity}>> query(QueryObject qo) {
+        return JsonResult.success(service.page(qo));
+    }
+
+    @PostMapping
+    public JsonResult<?> save(${entity} module) {
+        service.save(module);
+        return JsonResult.success();
+    }
+
+    @PutMapping
+    public JsonResult<?> updateById(${entity} module) {
+        service.updateById(module);
+        return JsonResult.success();
+    }
+
+    @DeleteMapping("/{id}")
+    public JsonResult<?> deleteById(@PathVariable Long id) {
+        service.removeById(id);
+        return JsonResult.success();
+    }
+
+}
+#end
